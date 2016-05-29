@@ -113,16 +113,16 @@
   </div>
 
 <h3>My Insurance</h3>
-  <h5>Please scan the front side of your card</h5>
+  <h5>Please upload an image of the front side of your card</h5>
   <input type="file" id="cardfront">
   
-  <h5>Please scan the back side of your card</h5>
+  <h5>Please upload an image of the back side of your card</h5>
   <input type="file" id="cardback">
 
-  <h5>Please scan your driver's license</h5>
+  <h5>Please upload an image of your driver's license</h5>
   <input type="file" id="driverslicense">
   
-  <h4>If you are not the primary card holder, please fill out the following:</h4>
+  <h4>If you are not the primary insurance card holder, please fill out the following:</h4>
   
   <div class="form-group">
     1. <label for="guarantorfirst">First Name of Holder</label>
@@ -139,7 +139,30 @@
     <input type="date" class="form-control" name="RPDOB_span" id="guarantordob" placeholder="Date of Birth">
   </div>
 
-<button type="submit" class="btn btn-default">Check In</button>
+
+  4. <label for="sex">Relationship to Holder</label>
+  <div class="form-group">
+    <label class="radio-inline">
+      <input type="radio" name="RELATIONSHIPTOPATIENTID" id="guarantorrelationship" value="2">
+      Spouse
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="RELATIONSHIPTOPATIENTID" id="guarantorrelationship" value="3">
+      Child
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="RELATIONSHIPTOPATIENTID" id="guarantorrelationship" value="4">
+      Other
+    </label>
+  </div>
+
+  <input type="hidden" name="PRIVACYNOTICEGIVENFLAG_CHECKBOX" value = "Y">
+  <input type="hidden" name="PATIENTSIGNATUREONFILEFLAG" value ="Y">
+  <input type="hidden" name="INSUREDSIGNATUREONFILEFLAG" value="Y">
+  <input type="hidden" name="CONSENTTOCALLFLAG" value="Y">
+
+<div class="alert alert-success data-saved" style="display: none;">Saved!</div>
+<button type="submit" class="submit btn btn-default">Check In</button>
 </form>
 
 </html>
@@ -153,5 +176,24 @@
     databaseURL: "https://pronto-34571.firebaseio.com",
     storageBucket: "pronto-34571.appspot.com",
   };
-  firebase.initializeApp(config);
+
+ var fb = firebase.initializeApp(config);
+      var user_id;
+      $('.submit').on('click', function (e) {
+        e.preventDefault();
+        var updates = {};
+        user_id = user_id ? user_id : fb.database().ref().child('user-data').push().key;
+        updates[user_id] = $('form').getFormData();
+        fb.database().ref().child('user-data').update(updates);
+        $('.data-saved').show();
+      });
+ 
+ $.fn.getFormData = function() {
+      var fields = this.find('[name]');
+      var result = {};
+      $.each(fields, function (i, el) {
+        result[el.name] = el.value;
+      });
+      return result;
+    };
 </script>
