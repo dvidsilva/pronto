@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+
+
+<form>
+
+<h3>My Information</h3>  
+  <div class="form-group">
+    1. <label for="first">First Name</label>
+    <input type="text" class="form-control" name="FIRSTNAME" id="first" placeholder="First Name">
+  </div>
+
+  <div class="form-group">
+    2. <label for="last_name">Last Name</label>
+    <input type="text" class="form-control" name="LASTNAME" id="last" placeholder="Last Name">
+  </div>
+
+  3. <label for="sex">Sex</label>
+  <div class="form-group">
+    <label class="radio-inline">
+      <input type="radio" name="SEX" id="sex" value="F">
+      Female
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="SEX" id="sex" value="M">
+      Male  
+    </label>
+  </div>
+  
+  <div class="form-group">
+    4. <label for="dob">Date of Birth</label>
+    <input type="date" class="form-control" name="DOB" id="dob">
+  </div>
+
+  <div class="form-group">
+    5. <label for="phone">Phone</label>
+    <input type="text" class="form-control" name="HOMEPHONE" id="phone" placeholder="Phone number">
+  </div>
+
+  <div class="form-group">
+    6. <label for="email">Email</label>
+    <input type="email" class="form-control" name="EMAIL" id="email" placeholder="Email">
+  </div>
+
+  <div class="form-group">
+    7. <label for="address1">Street Address</label>
+    <input type="text" class="form-control" name="ADDRESS1" id="address" placeholder="Enter full street address">
+  </div>
+
+  <div class="form-group">
+    8. <label for="zip">Zip Code</label>
+    <input type="text" class="form-control" name="ZIP" id="zip"placeholder="Zip Code">
+  </div>
+
+  <div class="form-group">
+    9. <label for="city">City</label>
+    <input type="text" class="form-control" name="CITY" id="city" placeholder="City">
+  </div>
+
+  <div class="form-group">
+    10. <label for="state">State</label>
+    <input type="text" class="form-control" name="STATE_text" id="state">
+  </div>
+
+<h3>Emergency Contact</h3>  
+  
+  <div class="form-group">
+    1. <label for="contactname">Name</label>
+    <input type="text" class="form-control" name="CONTACTNAME" id="contactname" placeholder="Contact Name">
+  </div>  
+
+  <div class="form-group">  
+  2. <label for="contactrelationship">Relationship</label>
+    <label class="radio-inline">
+      <input type="radio" name="CONTACTRELATIONSHIP" id="contactrelationship" value="SPOUSE">
+      Spouse
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="CONTACTRELATIONSHIP" id="contactrelationship" value="PARENT">
+      Parent
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="CONTACTRELATIONSHIP" id="contactrelationship" value="OTHER">
+      Other
+    </label>
+    </div>
+
+  <div class="form-group">
+    3. <label for="contactphone">Phone</label>
+    <input type="text" class="form-control" name="CONTACTPHONE1" id="contactphone" placeholder="Contact Phone">
+  </div>
+
+<h3>My Insurance</h3>
+  <h5>Please scan the front side of your card</h5>
+  <input type="file" id="cardfront">
+  
+  <h5>Please scan the back side of your card</h5>
+  <input type="file" id="cardback">
+
+  <h5>Please scan your driver's license</h5>
+  <input type="file" id="driverslicense">
+  
+  <h4>If you are not the primary card holder, please fill out the following:</h4>
+  
+  <div class="form-group">
+    1. <label for="guarantorfirst">First Name of Holder</label>
+    <input type="text" class="form-control" name="RPFIRSTNAME" id="guarantorfirst" placeholder="First Name">
+  </div>
+
+  <div class="form-group">
+    2. <label for="guarantorlast">Last Name of Holder</label>
+    <input type="text" class="form-control" name="RPLASTNAME" id="guarantorlast" placeholder="Last Name">
+  </div>
+  
+  <div class="form-group">
+    3. <label for="guarantordob">Date of Birth of Holder</label>
+    <input type="date" class="form-control" name="RPDOB_span" id="guarantordob" placeholder="Date of Birth">
+  </div>
+
+<button type="submit" class="btn btn-default">Check In</button>
+</form>
+
+</html>
+
+<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDMU8bIRFMCn2MozdUIdNryXhne3ziapJo",
+    authDomain: "pronto-34571.firebaseapp.com",
+    databaseURL: "https://pronto-34571.firebaseio.com",
+    storageBucket: "pronto-34571.appspot.com",
+  };
+  firebase.initializeApp(config);
+</script>
