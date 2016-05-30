@@ -40,11 +40,13 @@ label.error {
 	border-radius: 5px;
 }
 
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-device-width: 4000px) {
 	.btn.active, .btn:active {
-	background: #0e2f44 !important;
+		background: #0e2f44 !important;
 	}
 }
+
+
 
 .submit {
 	display: block;
