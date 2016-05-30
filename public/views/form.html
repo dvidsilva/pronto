@@ -10,6 +10,8 @@
     <!-- CSS -->
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/stylesheet.css" rel="stylesheet">
+    <link rel="icon" href="/img/favicon.png" type="image/x-icon"/>
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -24,9 +26,9 @@
     <script src="/bootstrap/js/bootstrap.min.js"></script>
 
 <div class="container">
-<form>
+<form id="form">
 
-<div class="section-title">My Information</div>  
+<div class="section-title">My Information</div>
   <div class="form-group">
     <span class="label-numbers">1.</span>
     <label for="first">First Name</label>
@@ -48,7 +50,7 @@
       </label>
       <label class="btn btn-primary">
         <input type="radio" name="SEX" id="sex" value="M">
-        Male  
+        Male
       </label>
     </div>
 
@@ -61,7 +63,7 @@
   <div class="form-group">
     <span class="label-numbers">5.</span>
     <label for="phone">Phone</label>
-    <input type="tel" class="form-control input-lg" name="HOMEPHONE" id="phone" placeholder="Phone number">
+    <input type="tel" class="form-control input-lg" name="HOMEPHONE" id="phone" placeholder="Phone number" required minlength="7">
   </div>
 
   <div class="form-group has-feedback">
@@ -94,13 +96,13 @@
     <input type="text" class="form-control input-lg" name="STATE_text" id="state">
   </div>
 
-<div class="section-title">Emergency Contact</div>  
-  
+<div class="section-title">Emergency Contact</div>
+
   <div class="form-group">
     <span class="label-numbers">1.</span>
     <label for="contactname">Name</label>
     <input type="text" class="form-control input-lg" name="CONTACTNAME" id="contactname" placeholder="Contact Name">
-  </div>  
+  </div>
 
   <span class="label-numbers">2.</span>
   <label for="contactrelationship">Relationship</label>
@@ -128,7 +130,7 @@
 <div class="section-title">My Insurance</div>
   <!-- <h5>Please upload an image of the front side of your card</h5>
   <input type="file" id="cardfront">
-  
+
   <h5>Please upload an image of the back side of your card</h5>
   <input type="file" id="cardback">
 
@@ -137,7 +139,7 @@
    -->
 
   <div class="section-subtitle">Please complete this section if you don't have your insurance card or are not the primary card holder.</div>
-  
+
   <div class="form-group">
     <span class="label-numbers">1.</span>
     <label for="guarantorfirst">First Name of Holder</label>
@@ -149,7 +151,7 @@
     <label for="guarantorlast">Last Name of Holder</label>
     <input type="text" class="form-control input-lg" name="RPLASTNAME" id="guarantorlast" placeholder="Last Name">
   </div>
-  
+
   <div class="form-group">
     <span class="label-numbers">3.</span>
     <label for="guarantordob">Date of Birth of Holder</label>
@@ -172,7 +174,7 @@
       Other
     </label>
   </div>
-  
+
   <div class="form-group">
     <span class="label-numbers">5.</span>
     <label for="insurancecarrier">Insurance Carrier</label>
@@ -190,8 +192,10 @@
   <input type="hidden" name="INSUREDSIGNATUREONFILEFLAG" value="Y">
   <input type="hidden" name="CONSENTTOCALLFLAG" value="Y">
 
-<div class="alert alert-success data-saved" style="display: none;">Saved!</div>
-<button type="submit" class="submit btn btn-default">Check In</button>
+  <div class="alert alert-success data" style="display: none;"></div>
+
+  <button type="submit" class="submit btn btn-default">Check In</button>
+
 </form>
 
 </div>
@@ -199,6 +203,7 @@
 </html>
 
 <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+<script src="/scripts/jquery.validate.js"></script>
 <script>
   // Initialize Firebase
   var config = {
@@ -210,15 +215,33 @@
 
  var fb = firebase.initializeApp(config);
       var user_id;
-      $('.submit').on('click', function (e) {
+      // https://jqueryvalidation.org/validate
+      // https://jqueryvalidation.org/documentation/
+      $("#form").validate({
+        highlight: function (element) {
+          $(element).parent('div').addClass('has-error');
+        },
+        unhighlight: function (element) {
+          $(element).parent('div').removeClass('has-error').addClass('has-success');
+        }
+      });
+
+      $('#form').on('submit', function (e) {
+        if (!$('#form').valid()) {
+          $('.alert.data').addClass('alert-danger').removeClass('alert-success').show()
+              .html('Please correct the erros in the form before continuing');
+          return;
+        }
         e.preventDefault();
         var updates = {};
         user_id = user_id ? user_id : fb.database().ref().child('user-data').push().key;
         updates[user_id] = $('form').getFormData();
         fb.database().ref().child('user-data').update(updates);
-        $('.data-saved').show();
+        $('.alert.data').addClass('alert-error').removeClass('alert-success').show()
+            .html('Saved! your key is: <p><strong id="key"></strong></p>');
+        $('#key').html(user_id);
       });
- 
+
  $.fn.getFormData = function() {
       var fields = this.find('[name]');
       var result = {};
