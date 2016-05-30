@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+
+<div class="container">
+<form>
+
+<div class="section-title">My Information</div>  
+  <div class="form-group">
+    <span class="label-numbers">1.</span>
+    <label for="first">First Name</label>
+    <input type="text" class="form-control input-lg" name="FIRSTNAME" id="first" placeholder="First Name">
+  </div>
+
+  <div class="form-group">
+    <span class="label-numbers">2.</span>
+    <label for="last_name">Last Name</label>
+    <input type="text" class="form-control input-lg" name="LASTNAME" id="last" placeholder="Last Name">
+  </div>
+
+  <span class="label-numbers">3.</span>
+  <label for="sex">Sex</label>
+    <label class="radio-inline">
+      <input type="radio" name="SEX" id="sex" value="F">
+      Female
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="SEX" id="sex" value="M">
+      Male  
+    </label>
+  
+  <div class="form-group">
+    <span class="label-numbers">4.</span>
+    <label for="dob">Date of Birth</label>
+    <input type="date" class="form-control input-lg" name="DOB" id="dob">
+  </div>
+
+  <div class="form-group">
+    <span class="label-numbers">5.</span>
+    <label for="phone">Phone</label>
+    <input type="tel" class="form-control input-lg" name="HOMEPHONE" id="phone" placeholder="Phone number">
+  </div>
+
+  <div class="form-group has-feedback">
+    <span class="label-numbers">6.</span>
+    <label for="email">Email</label>
+    <input type="email" class="form-control input-lg" name="EMAIL" id="email" placeholder="Email">
+  </div>
+
+  <div class="form-group">
+    <span class="label-numbers">7.</span>
+    <label for="address1">Street Address</label>
+    <input type="text" class="form-control input-lg" name="ADDRESS1" id="address" placeholder="Enter full street address">
+  </div>
+
+  <div class="form-group">
+    <span class="label-numbers">8.</span>
+    <label for="zip">Zip Code</label>
+    <input type="text" class="form-control input-lg"  name="ZIP" id="zip"placeholder="Zip Code">
+  </div>
+
+  <div class="form-group">
+    <span class="label-numbers">9.</span>
+    <label for="city">City</label>
+    <input type="text" class="form-control input-lg" name="CITY" id="city" placeholder="City">
+  </div>
+
+  <div class="form-group">
+    <span class="label-numbers">10.</span>
+    <label for="state">State</label>
+    <input type="text" class="form-control input-lg" name="STATE_text" id="state">
+  </div>
+
+<div class="section-title">Emergency Contact</div>  
+  
+  <div class="form-group">
+    <span class="label-numbers">1.</span>
+    <label for="contactname">Name</label>
+    <input type="text" class="form-control input-lg" name="CONTACTNAME" id="contactname" placeholder="Contact Name">
+  </div>  
+
+  <div class="form-group">  
+  <span class="label-numbers">2.</span>
+  <label for="contactrelationship">Relationship</label>
+    <label class="radio-inline">
+      <input type="radio" name="CONTACTRELATIONSHIP" id="contactrelationship" value="SPOUSE">
+      Spouse
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="CONTACTRELATIONSHIP" id="contactrelationship" value="PARENT">
+      Parent
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="CONTACTRELATIONSHIP" id="contactrelationship" value="OTHER">
+      Other
+    </label>
+    </div>
+
+  <div class="form-group">
+    <span class="label-numbers">3.</span>
+    <label for="contactphone">Phone</label>
+    <input type="text" class="form-control input-lg" name="CONTACTPHONE1" id="contactphone" placeholder="Contact Phone">
+  </div>
+
+<div class="section-title">My Insurance</div>
+  <!-- <h5>Please upload an image of the front side of your card</h5>
+  <input type="file" id="cardfront">
+  
+  <h5>Please upload an image of the back side of your card</h5>
+  <input type="file" id="cardback">
+
+  <h5>Please upload an image of your driver's license</h5>
+  <input type="file" id="driverslicense">
+   -->
+
+  <div class="section-subtitle">Please complete this section if you don't have your insurance card or are not the primary card holder.</div>
+  
+  <div class="form-group">
+    <span class="label-numbers">1.</span>
+    <label for="guarantorfirst">First Name of Holder</label>
+    <input type="text" class="form-control input-lg" name="RPFIRSTNAME" id="guarantorfirst" placeholder="First Name">
+  </div>
+
+  <div class="form-group">
+    <span class="label-numbers">2.</span>
+    <label for="guarantorlast">Last Name of Holder</label>
+    <input type="text" class="form-control input-lg" name="RPLASTNAME" id="guarantorlast" placeholder="Last Name">
+  </div>
+  
+  <div class="form-group">
+    <span class="label-numbers">3.</span>
+    <label for="guarantordob">Date of Birth of Holder</label>
+    <input type="date" class="form-control input-lg" name="RPDOB_span" id="guarantordob" placeholder="Date of Birth">
+  </div>
+
+  <span class="label-numbers">4.</span>
+  <label for="sex">Your Relationship to Holder</label>
+  <div class="form-group">
+    <label class="radio-inline">
+      <input type="radio" name="RELATIONSHIPTOPATIENTID" id="guarantorrelationship" value="2">
+      Spouse
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="RELATIONSHIPTOPATIENTID" id="guarantorrelationship" value="3">
+      Child
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="RELATIONSHIPTOPATIENTID" id="guarantorrelationship" value="4">
+      Other
+    </label>
+  </div>
+  
+  <div class="form-group">
+    <span class="label-numbers">5.</span>
+    <label for="insurancecarrier">Insurance Carrier</label>
+    <input type="text" class="form-control input-lg" id="insurancecarrier" placeholder="Insurance Carrier (e.g. Blue Shield CA)">
+  </div>
+
+   <div class="form-group">
+    <span class="label-numbers">6.</span>
+    <label for="insuranceid">ID Number</label>
+    <input type="text" class="form-control input-lg" id="insuranceid" placeholder="ID Number">
+  </div>
+
+  <input type="hidden" name="PRIVACYNOTICEGIVENFLAG_CHECKBOX" value = "Y">
+  <input type="hidden" name="PATIENTSIGNATUREONFILEFLAG" value ="Y">
+  <input type="hidden" name="INSUREDSIGNATUREONFILEFLAG" value="Y">
+  <input type="hidden" name="CONSENTTOCALLFLAG" value="Y">
+
+<div class="alert alert-success data-saved" style="display: none;">Saved!</div>
+<button type="submit" class="submit btn btn-default">Check In</button>
+</form>
+
+</div>
+
+</html>
+
+<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDMU8bIRFMCn2MozdUIdNryXhne3ziapJo",
+    authDomain: "pronto-34571.firebaseapp.com",
+    databaseURL: "https://pronto-34571.firebaseio.com",
+    storageBucket: "pronto-34571.appspot.com",
+  };
+
+ var fb = firebase.initializeApp(config);
+      var user_id;
+      $('.submit').on('click', function (e) {
+        e.preventDefault();
+        var updates = {};
+        user_id = user_id ? user_id : fb.database().ref().child('user-data').push().key;
+        updates[user_id] = $('form').getFormData();
+        fb.database().ref().child('user-data').update(updates);
+        $('.data-saved').show();
+      });
+ 
+ $.fn.getFormData = function() {
+      var fields = this.find('[name]');
+      var result = {};
+      $.each(fields, function (i, el) {
+        result[el.name] = el.value;
+      });
+      return result;
+    };
+</script>
