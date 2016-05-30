@@ -188,7 +188,7 @@
   <input type="hidden" name="INSUREDSIGNATUREONFILEFLAG" value="Y">
   <input type="hidden" name="CONSENTTOCALLFLAG" value="Y">
 
-<div class="alert alert-success data-saved" style="display: none;">Saved!</div>
+  <div class="alert alert-success data-saved" style="display: none;">Saved! your key is: <p><strong id='key'></strong></p></div>
 <button type="submit" class="submit btn btn-default">Check In</button>
 </form>
 
@@ -215,6 +215,7 @@
         updates[user_id] = $('form').getFormData();
         fb.database().ref().child('user-data').update(updates);
         $('.data-saved').show();
+        $('#key').html(user_id);
       });
  
  $.fn.getFormData = function() {
