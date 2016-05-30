@@ -58,3 +58,7 @@ img {
 	margin-right: auto;
 	margin-top: 20px;
 }
+
+.container {
+	max-width: 500px;
+}
