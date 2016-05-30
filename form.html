@@ -26,7 +26,7 @@
 
 <form>
 
-<h3>My Information</h3>  
+<h3>My Information</h3>
   <div class="form-group">
     1. <label for="first">First Name</label>
     <input type="text" class="form-control" name="FIRSTNAME" id="first" placeholder="First Name">
@@ -45,10 +45,10 @@
     </label>
     <label class="radio-inline">
       <input type="radio" name="SEX" id="sex" value="M">
-      Male  
+      Male
     </label>
   </div>
-  
+
   <div class="form-group">
     4. <label for="dob">Date of Birth</label>
     <input type="date" class="form-control" name="DOB" id="dob">
@@ -84,14 +84,14 @@
     <input type="text" class="form-control" name="STATE_text" id="state">
   </div>
 
-<h3>Emergency Contact</h3>  
-  
+<h3>Emergency Contact</h3>
+
   <div class="form-group">
     1. <label for="contactname">Name</label>
     <input type="text" class="form-control" name="CONTACTNAME" id="contactname" placeholder="Contact Name">
-  </div>  
+  </div>
 
-  <div class="form-group">  
+  <div class="form-group">
   2. <label for="contactrelationship">Relationship</label>
     <label class="radio-inline">
       <input type="radio" name="CONTACTRELATIONSHIP" id="contactrelationship" value="SPOUSE">
@@ -115,15 +115,15 @@
 <h3>My Insurance</h3>
   <h5>Please upload an image of the front side of your card</h5>
   <input type="file" id="cardfront">
-  
+
   <h5>Please upload an image of the back side of your card</h5>
   <input type="file" id="cardback">
 
   <h5>Please upload an image of your driver's license</h5>
   <input type="file" id="driverslicense">
-  
+
   <h4>If you are not the primary insurance card holder, please fill out the following:</h4>
-  
+
   <div class="form-group">
     1. <label for="guarantorfirst">First Name of Holder</label>
     <input type="text" class="form-control" name="RPFIRSTNAME" id="guarantorfirst" placeholder="First Name">
@@ -133,7 +133,7 @@
     2. <label for="guarantorlast">Last Name of Holder</label>
     <input type="text" class="form-control" name="RPLASTNAME" id="guarantorlast" placeholder="Last Name">
   </div>
-  
+
   <div class="form-group">
     3. <label for="guarantordob">Date of Birth of Holder</label>
     <input type="date" class="form-control" name="RPDOB_span" id="guarantordob" placeholder="Date of Birth">
@@ -177,17 +177,62 @@
     storageBucket: "pronto-34571.appspot.com",
   };
 
- var fb = firebase.initializeApp(config);
-      var user_id;
-      $('.submit').on('click', function (e) {
+var fb = firebase.initializeApp(config);
+var user_id;
+
+// event listeners
+$('.submit').on('click', function (e) {
         e.preventDefault();
         var updates = {};
         user_id = user_id ? user_id : fb.database().ref().child('user-data').push().key;
         updates[user_id] = $('form').getFormData();
         fb.database().ref().child('user-data').update(updates);
         $('.data-saved').show();
-      });
- 
+});
+
+var zip_cache = {};
+
+function handleResp(data) {
+    // Check for error
+    if (data.error_msg) {
+        console.log('error getting city');
+    }
+    else if ("city" in data)
+    {
+        // Set city and state
+        $("[name='CITY']").val(data.city);
+        $("input[name='STATE_text']").val(data.state);
+    }
+}
+
+// @TODO add the client key followint this https://www.zipcodeapi.com/Examples
+$('[name=ZIP]').on('keyup change', function (e) {
+    var zipcode = $(this).val();
+    if (zipcode && zipcode.length >= 5 && /^[0-9]+$/.test(zipcode)) {
+        console.log('valid length zip, performing query');
+        var city = $("[name=CITY]");
+        var state = $("[name=STATE_text]");
+        var clientKey = 'YoHAhrxUiNlT6XOMQzLZTqZjJfVWJVLHjshBUPvdCR6IOVuFufEoGDIqTDmDy8kS';
+        if (!city.val()) {
+            if (zipcode in zip_cache) {
+                handleResp(cache[zip_cache]);
+            } else {
+                var url = "https://www.zipcodeapi.com/rest/"+clientKey+"/info.json/" + zipcode + "/radians";
+                $.ajax({
+                    "url": url,
+                    "dataType": "json"
+                }).done(function(data) {
+                    handleResp(data);
+                    zip_cache[zipcode] = data;
+                }).fail(function(data) {
+                });
+           }
+        }
+        return;
+    }
+    console.log('invalid length zip, skipping query');
+});
+
  $.fn.getFormData = function() {
       var fields = this.find('[name]');
       var result = {};
@@ -196,4 +241,5 @@
       });
       return result;
     };
+
 </script>
