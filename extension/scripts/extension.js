@@ -9,13 +9,32 @@
  (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(newscript);
 })();
 var __setFormData = function setFormData (sel, data) {
- console.info('setting form to data', data);
- var inputList = document.querySelectorAll(sel + ' [name]');
- [].forEach.call(inputList, function(input) { 
-     if (data[input.name] && data[input.name] !== "undefined") {
-       input.value = data[input.name];
-     }
- });
+  console.info('setting form to data', data);
+  var inputList = document.querySelectorAll(sel + ' [name]:not([type="checkbox"]):not([type="radio"])');
+  [].forEach.call(inputList, function(input) {
+      if (data[input.name] && data[input.name] !== "undefined") {
+        input.value = data[input.name];
+      }
+  });
+  var checkboxList = document.querySelectorAll(sel + ' [name][type="checkbox"]');
+  [].forEach.call(checkboxList, function(input) {
+      if (data[input.name] && data[input.name] !== "undefined") {
+          if (input.value === data[input.name]) {
+            input.checked = true;
+          }
+      }
+  });
+  var radioList = document.querySelectorAll(sel + ' [name][type="radio"]');
+  [].forEach.call(radioList, function(input) {
+      console.log(input);
+      if (data[input.name] && data[input.name] !== "undefined") {
+          console.log(data[input.name]);
+          if (input.value === data[input.name]) {
+            input.checked = true;
+          }
+      }
+  });
+
 };
 var _fb;
 var fbToForm = function fbToForm (key, sel) {
