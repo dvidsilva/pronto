@@ -248,6 +248,7 @@
   <input type="hidden" name="PATIENTSIGNATUREONFILEFLAG" value ="Y">
   <input type="hidden" name="INSUREDSIGNATUREONFILEFLAG" value="Y">
   <input type="hidden" name="CONSENTTOCALLFLAG" value="Y">
+  <input type="hidden" name="PRIMARYPROVIDERID">
 
 
   <div class="create-account-form">
@@ -293,7 +294,24 @@ fb.auth().onAuthStateChanged(function(user) {
   }
 
 });
-      
+
+
+function setProviderId () {
+  var d = new Date();
+  var n = d.getDay();
+  var provider;
+  if ([1, 4, 6].indexOf(n) > -1) {
+    provider = 3; //'ZHANG_X';
+  } else {
+    provider = 2; //'WANG_J';
+  }
+  return provider;
+}
+
+$(document).ready(function () {
+  $("[name=PRIMARYPROVIDERID]").val(setProviderId());
+});
+
 
       // https://jqueryvalidation.org/validate
       // https://jqueryvalidation.org/documentation/
