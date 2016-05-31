@@ -14,12 +14,6 @@ var config = config || {
     databaseURL: "https://pronto-34571.firebaseio.com",
     storageBucket: "pronto-34571.appspot.com",
 };
-var config = {
-    apiKey: "AIzaSyCaW6iElqeJa_hsMkeXqkXknqS-vvtDVAc",
-    authDomain: "form-sample.firebaseapp.com",
-    databaseURL: "https://form-sample.firebaseio.com",
-    storageBucket: "form-sample.appspot.com",
-};
 _fb = _fb && _fb.name === "fbToForma" ? _fb : firebase.initializeApp(config, "fbToForma");
 var fbToForm = function fbToForm (key, sel) {
     $('#status').html('Adding data to: ' + sel + " for key: " + key);
