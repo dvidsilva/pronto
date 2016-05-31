@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Bootstrap 101 Template</title>
+    <title>Total Care Chino Registration</title>
 
     <!-- Bootstrap -->
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -24,7 +24,167 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/bootstrap/js/bootstrap.min.js"></script>
     <script src="/scripts/jquery.validate.js"></script>
-
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
 
 <h1>Welcome to Pronto. Complete the form <a href="/views/form.html">here</a></h1>
 </html>
+
+Create an account here:
+<form>
+  <div class="form-group">
+    <label for="email">Email address</label>
+    <input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="Email">
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="Password">
+  </div>
+  <div class="buttons">
+    <button disabled class="btn btn-success" id="quickstart-sign-in" name="signin">Sign In</button>
+    <button class="btn btn-default" id="quickstart-sign-up" name="signup">Create Account</button>
+  </div>
+  <div class="quickstart-user-details-container">
+    Firebase sign-in status: <span id="quickstart-sign-in-status">Unknown</span>
+    <div>Firebase auth <code>currentUser</code> object value:</div>
+    <pre><code id="quickstart-account-details">null</code></pre>
+  </div>
+</form>
+
+
+  <script type="text/javascript">
+  var config = {
+    apiKey: "AIzaSyDMU8bIRFMCn2MozdUIdNryXhne3ziapJo",
+    authDomain: "pronto-34571.firebaseapp.com",
+    databaseURL: "https://pronto-34571.firebaseio.com",
+    storageBucket: "pronto-34571.appspot.com",
+  };
+
+ var fb = firebase.initializeApp(config);
+      var user_id;
+      // https://jqueryvalidation.org/validate
+      // https://jqueryvalidation.org/documentation/
+    /**
+     * Handles the sign in button press.
+     */
+    function toggleSignIn(event) {
+      event.preventDefault();
+      if (firebase.auth().currentUser) {
+        // [START signout]
+        firebase.auth().signOut();
+        // [END signout]
+      } else {
+        var email = document.getElementById('userEmail').value;
+        var password = document.getElementById('userPassword').value;
+        if (email.length < 4) {
+          alert('Please enter an email address.');
+          return;
+        }
+        if (password.length < 4) {
+          alert('Please enter a password.');
+          return;
+        }
+        // Sign in with email and pass.
+        // [START authwithemail]
+        firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // [START_EXCLUDE]
+          if (errorCode === 'auth/wrong-password') {
+            alert('Wrong password.');
+          } else {
+            console.error(error);
+          }
+          // [END_EXCLUDE]
+        });
+        // [END authwithemail]
+      }
+      document.getElementById('quickstart-sign-in').disabled = true;
+    }
+    function handleSignUp(event) {
+      event.preventDefault();
+      var email = document.getElementById('userEmail').value;
+      var password = document.getElementById('userPassword').value;
+      if (email.length < 4) {
+        alert('Please enter an email address.');
+        return;
+      }
+      if (password.length < 4) {
+        alert('Please enter a password.');
+        return;
+      }
+      // Sign in with email and pass.
+      // [START createwithemail]
+      firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // [START_EXCLUDE]
+        if (errorCode == 'auth/weak-password') {
+          alert('The password is too weak.');
+        } else {
+          console.error(error);
+        }
+        // [END_EXCLUDE]
+      });
+      // [END createwithemail]
+    }
+    /**
+     * Handles registering callbacks for the auth status.
+     *
+     * This method registers a listener with firebase.auth().onAuthStateChanged. This listener is called when
+     * the user is signed in or out, and that is where we update the UI.
+     *
+     * When signed in, we also authenticate to the Firebase Realtime Database.
+     */
+    function initApp() {
+      // Listening for auth state changes.
+      // [START authstatelistener]
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          // window.location.href = "/views/form.html";
+          // User is signed in.
+          var displayName = user.displayName;
+          var email = user.email;
+          var emailVerified = user.emailVerified;
+          var photoURL = user.photoURL;
+          var isAnonymous = user.isAnonymous;
+          var uid = user.uid;
+          user_id = user.uid;
+
+          var refreshToken = user.refreshToken;
+          var providerData = user.providerData;
+          // [START_EXCLUDE silent]
+          document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
+          document.getElementById('quickstart-sign-in').textContent = 'Sign out';
+          document.getElementById('quickstart-account-details').textContent = JSON.stringify({
+            displayName: displayName,
+            email: email,
+            emailVerified: emailVerified,
+            photoURL: photoURL,
+            isAnonymous: isAnonymous,
+            uid: uid,
+            refreshToken: refreshToken,
+            providerData: providerData
+          }, null, '  ');
+          // [END_EXCLUDE]
+        } else {
+          // User is signed out.
+          // [START_EXCLUDE silent]
+          document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
+          document.getElementById('quickstart-sign-in').textContent = 'Sign in';
+          document.getElementById('quickstart-account-details').textContent = 'null';
+          // [END_EXCLUDE]
+        }
+        // [START_EXCLUDE silent]
+        document.getElementById('quickstart-sign-in').disabled = false;
+        // [END_EXCLUDE]
+      });
+      // [END authstatelistener]
+      document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
+      document.getElementById('quickstart-sign-up').addEventListener('click', handleSignUp, false);
+    }
+    window.onload = function() {
+      initApp();
+    };
+  </script>

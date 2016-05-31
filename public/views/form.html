@@ -249,6 +249,15 @@
   <input type="hidden" name="INSUREDSIGNATUREONFILEFLAG" value="Y">
   <input type="hidden" name="CONSENTTOCALLFLAG" value="Y">
 
+
+  <div class="create-account-form">
+    <p><strong>Create an account (optional)</strong></p>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="userPassword" placeholder="Password">
+    </div>
+  </div>
+
   <div class="alert alert-success data" style="display: none;"></div>
 
   <button type="submit" class="submit btn btn-success">Check In</button>
@@ -270,8 +279,23 @@
     storageBucket: "pronto-34571.appspot.com",
   };
 
- var fb = firebase.initializeApp(config);
-      var user_id;
+var fb = firebase.initializeApp(config);
+var user_id;
+var wait;
+fb.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    user_id = user.uid;
+    if (wait) {
+      wait = false;
+      saveFormDataToFb();
+    }
+  } else {
+    //window.location.href = "/";
+  }
+
+});
+      
+
       // https://jqueryvalidation.org/validate
       // https://jqueryvalidation.org/documentation/
       $("#form").validate({
@@ -284,20 +308,48 @@
       });
 
       $('#form').on('submit', function (e) {
+        e.preventDefault();
         if (!$('#form').valid()) {
           $('.alert.data').addClass('alert-danger').removeClass('alert-success').show()
               .html('Please correct the errors above before continuing');
           return;
         }
-        e.preventDefault();
-        var updates = {};
-        user_id = user_id ? user_id : fb.database().ref().child('user-data').push().key;
-        updates[user_id] = $('form').getFormData();
-        fb.database().ref().child('user-data').update(updates);
-        $('.alert.data').addClass('alert-error').removeClass('alert-success').show()
-            .html('Saved! your key is: <p><strong id="key"></strong></p>');
-        $('#key').html(user_id);
+        var email = $('#email').val();
+        var password = $('#userPassword').val();
+        wait = false;
+        if (password !== undefined && password !== '')  {
+          wait = true;
+          firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+              // Handle Errors here.
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              if (errorCode == 'auth/weak-password') {
+                alert('The password is too weak.');
+              } else {
+                console.error(error);
+              }
+              // lets create the account regardless
+              // FIX: show an error message and let the user retry instead
+              saveFormDataToFb();
+          });
+        }
+        if (!wait) {
+          saveFormDataToFb();
+        }
       });
+
+function saveFormDataToFb () {
+  var updates = {};
+  if (!user_id) {
+    user_id = fb.database().ref().child('user-data').push().key;
+  }
+  updates = $('form').getFormData();
+  fb.database().ref().child('user-data/'+ user_id).update(updates);
+  $('.alert.data').addClass('alert-error').removeClass('alert-success').show()
+      .html('Saved! your key is: <p><strong id="key"></strong></p>');
+  $('#key').html(user_id);
+  return true;
+}
 
  $.fn.getFormData = function() {
       var fields = this.find('[name]');
@@ -333,7 +385,7 @@ $('[name=ZIP]').on('keyup change', function (e) {
         var clientKey = 'js-EJFbLjfar09JjmzcYHf7USipKEHeqjg42WgOfwZHw9rPv02uHhBB9T0UyI8Y1p33';
         if (!city.val()) {
             if (zipcode in zip_cache) {
-                handleResp(cache[zip_cache]);
+                handleResp(zip_cache[zipcode]);
             } else {
                 var url = "https://www.zipcodeapi.com/rest/"+clientKey+"/info.json/" + zipcode + "/radians";
                 $.ajax({
