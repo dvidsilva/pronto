@@ -190,48 +190,6 @@ $('.submit').on('click', function (e) {
         $('.data-saved').show();
 });
 
-var zip_cache = {};
-
-function handleResp(data) {
-    // Check for error
-    if (data.error_msg) {
-        console.log('error getting city');
-    }
-    else if ("city" in data)
-    {
-        // Set city and state
-        $("[name='CITY']").val(data.city);
-        $("input[name='STATE_text']").val(data.state);
-    }
-}
-
-// @TODO add the client key followint this https://www.zipcodeapi.com/Examples
-$('[name=ZIP]').on('keyup change', function (e) {
-    var zipcode = $(this).val();
-    if (zipcode && zipcode.length >= 5 && /^[0-9]+$/.test(zipcode)) {
-        console.log('valid length zip, performing query');
-        var city = $("[name=CITY]");
-        var state = $("[name=STATE_text]");
-        var clientKey = 'YoHAhrxUiNlT6XOMQzLZTqZjJfVWJVLHjshBUPvdCR6IOVuFufEoGDIqTDmDy8kS';
-        if (!city.val()) {
-            if (zipcode in zip_cache) {
-                handleResp(cache[zip_cache]);
-            } else {
-                var url = "https://www.zipcodeapi.com/rest/"+clientKey+"/info.json/" + zipcode + "/radians";
-                $.ajax({
-                    "url": url,
-                    "dataType": "json"
-                }).done(function(data) {
-                    handleResp(data);
-                    zip_cache[zipcode] = data;
-                }).fail(function(data) {
-                });
-           }
-        }
-        return;
-    }
-    console.log('invalid length zip, skipping query');
-});
 
  $.fn.getFormData = function() {
       var fields = this.find('[name]');

@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+    "name": "Pronto Health",
+    "description": "This extension allows a dr to prefill a form on their ERM",
+    "version": "1.0",
+    "homepage_url": "https://github.com/dvidsilva/pronto",
+    "browser_action": {
+        "default_icon": "favicon.png",
+        "default_popup": "popup.html",
+        "default_title": "Pronto Health"
+    },
+    "background": {
+        "page": "background.html"
+    },
+    "permissions": [
+        "activeTab",
+        "https://ajax.googleapis.com/"
+    ],
+    "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://cdn.firebase.com https://*.firebaseio.com https://*.firebaseio-demo.com; object-src 'self'"
+}
+
