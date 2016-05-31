@@ -1,61 +1,75 @@
-(function(){
-  if (firebase !== undefined) {
-    return;
-  }
- var newscript = document.createElement('script');
-    newscript.type = 'text/javascript';
-    newscript.async = true;
-    newscript.src = 'https://www.gstatic.com/firebasejs/3.0.2/firebase.js';
- (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(newscript);
-})();
 var __setFormData = function setFormData (sel, data) {
- console.info('setting form to data', data);
- var inputList = document.querySelectorAll(sel + ' [name]');
- [].forEach.call(inputList, function(input) { 
-     if (data[input.name] && data[input.name] !== "undefined") {
-       input.value = data[input.name];
-     }
- });
+  sel = sel || 'form';
+  $('#status').html('setting up data in: ' + sel);
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {sel: sel, data: data}, function(response) {
+          console.log('success');
+      });
+  });
 };
+
 var _fb;
+var config = config || {
+    apiKey: "AIzaSyDMU8bIRFMCn2MozdUIdNryXhne3ziapJo",
+    databaseURL: "https://pronto-34571.firebaseio.com",
+    storageBucket: "pronto-34571.appspot.com",
+};
+var config = {
+    apiKey: "AIzaSyCaW6iElqeJa_hsMkeXqkXknqS-vvtDVAc",
+    authDomain: "form-sample.firebaseapp.com",
+    databaseURL: "https://form-sample.firebaseio.com",
+    storageBucket: "form-sample.appspot.com",
+};
+_fb = _fb && _fb.name === "fbToForma" ? _fb : firebase.initializeApp(config, "fbToForma");
 var fbToForm = function fbToForm (key, sel) {
-    var config = config || {
-        apiKey: "AIzaSyDMU8bIRFMCn2MozdUIdNryXhne3ziapJo",
-        databaseURL: "https://pronto-34571.firebaseio.com",
-        storageBucket: "pronto-34571.appspot.com",
-    };
-    _fb = _fb && _fb.name === "fbToForma" ? _fb : firebase.initializeApp(config, "fbToForma");
+    $('#status').html('Adding data to: ' + sel + " for key: " + key);
+    key = (key || "").trim();
+    sel = sel || "form";
     _fb.database().ref('user-data/' + key).on('value', function(snapshot) {
+        $('#status').html('Retrieved data from firebase');
         __setFormData(sel, snapshot.val());
     });
 };
 
-$(function () {
-    var button = $('<button>');
-    button.addEventListener('click', function () {
-      button.html = "aaaaa";
-    });
+// http://stackoverflow.com/questions/377961/efficient-javascript-string-replacement
+function templateReplace (template, data) {
+  return template.replace(/%(\w*)%/g, function (m,key) {
+      return data.hasOwnProperty(key) ? data[key] : "";
+  });
+}
 
-    $('.loadpatient').on('click', function () {
-        $('.loadpatient').html('clicked load patient button');
-        var key = $('.patientkey').val();
-        if (!key) {
-            return;
+var loaded_patient_data = false;
+function loadPatientsData () {
+    $('#status').html('Loading patients list');
+    if (loaded_patient_data) {
+        return $('#status').html('Loaded patients list');
+    }
+    var patient_template = $('patienttemplate').html();
+    loaded_patient_data = true;
+    _fb.database().ref('user-data/').limitToLast(40).on('value', function(snapshot) {
+        $('#status').html('Loaded patients list');
+        var results = snapshot.val();
+        for (var i in  results) {
+            results[i].key = i;
+            $('.patient-list').prepend(templateReplace(patient_template, results[i]));
         }
-        fbToForm(key);
+        $('#status').html('Got patient data');
     });
-});
+}
 
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementsByTagName('button')[0].html = "hola";
-});
-// When the browser-action button is clicked...
-chrome.browserAction.onClicked.addListener(function (tab) {
-    chrome.tabs.create({url: 'https://google.com'});
-    // ...check the URL of the active tab against our pattern and...
-    // if (urlRegex.test(tab.url)) {
-        // ...if it matches, send a message specifying a callback too
-        // chrome.tabs.sendMessage(tab.id, {text: 'report_back'}, doStuffWithDom);
-    // }
+    document.getElementById('status').textContent = "Extension loaded";
+    var button = document.getElementById('loadpatient');
+    button.addEventListener('click', function () {
+        $('#status').html('Clicked load patient button');
+        var key = $('.patientkey').val();
+        if (!key) {
+            $('#status').html('Invalid key provided');
+            return;
+        }
+        fbToForm(key, 'form');
+    });
+    button = document.getElementById('loadpatientsdata');
+    button.addEventListener('click', loadPatientsData);
 });
 
