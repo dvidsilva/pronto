@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- For more instructions
+        http://lifehacker.com/5857721/how-to-build-a-chrome-extension -->
+</head>
+<body>
+    <style>
+      .container {
+        max-height: 600px;
+        min-height: 300px;
+        width: 150px;
+        border: 2px solid rgba(0,0,0,0.3);
+        border-radius: 2px;
+        background: white;
+      }
+    </style>
+    <div class="container">
+        <div class="page-header">
+          <h3>Pronto</h3>
+        </div>
+        <div class="form-group">
+          <input type="text" class="patientkey form-control">
+          <button class="loadpatient btn btn-primary">Load</button>
+        </div>
+        <div class="patient-list">
+        </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/3.0.2/firebase.js"></script>
+    <script src="scripts/jquery.min.js"></script>
+    <script stc="scripts/extension.js"></script>
+</body>
+</html>
+
