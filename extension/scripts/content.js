@@ -2,6 +2,7 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
     console.log(sender.tab ? "from a content script:" + sender.tab.url : "from the extension");
     var data = request.data || {};
     var sel = request.sel || 'form';
+    console.log(data);
 
     var inputList = document.querySelectorAll(sel + ' [name]:not([type="checkbox"]):not([type="radio"])');
     [].forEach.call(inputList, function(input) {
