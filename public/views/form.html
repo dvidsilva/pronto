@@ -243,30 +243,14 @@
   </div>
 </div>
 
-<script>
-function setProviderId () {
-  var d = new Date();
-  var n = d.getDay();
-  var provider;
-  if ([1, 4, 6].indexOf(n) > -1) {
-    provider = 3; //'ZHANG_X';
-  } else {
-    provider = 2; //'WANG_J';
-  }
-  return provider;
-}
-
-document.write('<input type="hidden" name="PRIMARYPROVIDERID" value="'+provider+'"/>');
-document.write('<input type="hidden" name="MOBILEPHONE" value="'+document.getElementById(phone).value+'"/>');
-
-</script>  
-
   <input type ="hidden" name="RELATIONSHIPTOPATIENTID" value="1">
   <input type="hidden" name="PRIVACYNOTICEGIVENFLAG" value = "Y">
   <input type="hidden" name="PATIENTSIGNATUREONFILEFLAG" value ="Y">
   <input type="hidden" name="INSUREDSIGNATUREONFILEFLAG" value="Y">
   <input type="hidden" name="CONSENTTOCALLFLAG" value="Y">
-
+  <input type="hidden" name="PRIMARYPROVIDERID">
+  <input type="hidden" name="MOBILEPHONE">
+  
 
   <div class="create-account-form">
     <label>Create an account (optional)</label>
@@ -296,6 +280,26 @@ document.write('<input type="hidden" name="MOBILEPHONE" value="'+document.getEle
     storageBucket: "pronto-34571.appspot.com",
   };
 
+function setProviderId () {
+  var d = new Date();
+  var n = d.getDay();
+  var provider;
+  if ([1, 4, 6].indexOf(n) > -1) {
+    provider = 3; //'ZHANG_X';
+  } else {
+    provider = 2; //'WANG_J';
+  }
+  return provider;
+};
+
+$(document).ready(function () {
+  $("[name=PRIMARYPROVIDERID]").val(setProviderId());
+});
+
+$(document).ready(function () {
+  $("[name=MOBILEPHONE]").val(document.getElementById('phone').value);
+});
+
 var fb = firebase.initializeApp(config);
 var user_id;
 var wait;
@@ -311,16 +315,8 @@ fb.auth().onAuthStateChanged(function(user) {
   }
 
 });
-  
-  
 
-// $(document).ready(function () {
-//   $("[name=PRIMARYPROVIDERID]").val(setProviderId());
-// });
 
-// $(document).ready(function () {
-//   $("[name=MOBILEPHONE]").val(document.getElementById('phone').value);
-// });
 
 
       // https://jqueryvalidation.org/validate
