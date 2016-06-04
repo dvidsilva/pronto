@@ -24,6 +24,28 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/bootstrap/js/bootstrap.min.js"></script>
 
+<script>
+  function setProviderId () {
+  var d = new Date();
+  var n = d.getDay();
+  var provider;
+  if ([1, 4, 6].indexOf(n) > -1) {
+    provider = 3; //'ZHANG_X';
+  } else {
+    provider = 2; //'WANG_J';
+  }
+  return provider;
+}
+
+$(document).ready(function () {
+  $("[name=PRIMARYPROVIDERID]").val(setProviderId());
+});
+
+$(document).ready(function () {
+  $("[name=MOBILEPHONE]").val(document.getElementById('phone').value;)
+});
+</script>
+
 <div class="container">
 <img class="logo" src="/img/logo.png">
 <div class="formname">
@@ -244,11 +266,12 @@
   
 
   <input type ="hidden" name="RELATIONSHIPTOPATIENTID" value="1">
-  <input type="hidden" name="PRIVACYNOTICEGIVENFLAG_CHECKBOX" value = "Y">
+  <input type="hidden" name="PRIVACYNOTICEGIVENFLAG" value = "Y">
   <input type="hidden" name="PATIENTSIGNATUREONFILEFLAG" value ="Y">
   <input type="hidden" name="INSUREDSIGNATUREONFILEFLAG" value="Y">
   <input type="hidden" name="CONSENTTOCALLFLAG" value="Y">
   <input type="hidden" name="PRIMARYPROVIDERID">
+  <input type="hidden" name="MOBILEPHONE">
 
 
   <div class="create-account-form">
@@ -293,23 +316,6 @@ fb.auth().onAuthStateChanged(function(user) {
     //window.location.href = "/";
   }
 
-});
-
-
-function setProviderId () {
-  var d = new Date();
-  var n = d.getDay();
-  var provider;
-  if ([1, 4, 6].indexOf(n) > -1) {
-    provider = 3; //'ZHANG_X';
-  } else {
-    provider = 2; //'WANG_J';
-  }
-  return provider;
-}
-
-$(document).ready(function () {
-  $("[name=PRIMARYPROVIDERID]").val(setProviderId());
 });
 
 
