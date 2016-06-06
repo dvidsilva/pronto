@@ -99,7 +99,7 @@
   <div class="form-group">
     <span class="label-numbers">10.</span>
     <label for="state">State</label>
-    <input type="text" class="form-control input-lg" name="STATE_text" id="state">
+    <input type="text" class="form-control input-lg" name="STATE_select" id="state" placeholder="State">
   </div>
 
 <div class="section-title">Emergency Contact</div>
@@ -139,32 +139,34 @@
 <!--   <div class="instructions">
   Please skip this section if you don't have insurance.
   </div> -->
+  <div class="form-group">
+    <span class="label-numbers">1.</span>
+    <label for="insurancecarrier">Insurance Carrier</label>
+    <input type="text" class="form-control input-lg" id="insurancecarrier" placeholder="Insurance Carrier (e.g. Blue Shield CA)">
+  </div>
+  <div class="form-group">
+    <span class="label-numbers">2.</span>
+    <label for="insuranceid">ID Number</label>
+    <input type="text" class="form-control input-lg" name="IDNUMBER" id="insuranceid" placeholder="ID Number">
+  </div>
 
-<label>Are you the primary card holder?</label>
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-  <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingOne">
-      <h4 class="panel-title">
-        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-          Yes, I'm the primary card holder.
-        </a>
-      </h4>
-    </div>
-    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-      <div class="panel-body">
-        <div class="form-group">
-            <span class="label-numbers">1.</span>
-            <label for="insurancecarrier">Insurance Carrier</label>
-            <input type="text" class="form-control input-lg" id="insurancecarrier" placeholder="Insurance Carrier (e.g. Blue Shield CA)">
-          </div>
-          <div class="form-group">
-            <span class="label-numbers">2.</span>
-            <label for="insuranceid">ID Number</label>
-            <input type="text" class="form-control input-lg" name="IDNUMBER" id="insuranceid" placeholder="ID Number">
-          </div>
+  <label>Are you the primary card holder?</label>
+  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingOne">
+        <h4 class="panel-title">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+            Yes, I'm the primary card holder.
+          </a>
+        </h4>
+      </div>
+      <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">
+          Please bring your insurance ID to the front desk.
+        </div>
       </div>
     </div>
-  </div>
+
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingTwo">
       <h4 class="panel-title">
@@ -178,13 +180,13 @@
         <div class="form-group">
           <span class="label-numbers">1.</span>
           <label for="insurancefirst">First Name of Holder</label>
-          <input type="text" class="form-control input-lg" name="INSUREDFIRST" id="guarantorfirst" placeholder="First Name">
+          <input type="text" class="form-control input-lg" name="INSUREDFIRSTNAME" id="guarantorfirst" placeholder="First Name">
         </div>
 
         <div class="form-group">
           <span class="label-numbers">2.</span>
           <label for="insurancelastname">Last Name of Holder</label>
-          <input type="text" class="form-control input-lg" name="INSUREDLAST" id="guarantorlast" placeholder="Last Name">
+          <input type="text" class="form-control input-lg" name="INSUREDLASTNAME" id="guarantorlast" placeholder="Last Name">
         </div>
 
         <div class="form-group">
@@ -193,20 +195,8 @@
           <input type="date" class="form-control input-lg" name="INSUREDDOB" id="insurancedob" placeholder="Date of Birth">
         </div>
 
-       <div class="form-group">
-          <span class="label-numbers">4.</span>
-          <label for="insurancecarrier">Insurance Carrier</label>
-          <input type="text" class="form-control input-lg" id="insurancecarrier" placeholder="Insurance Carrier (e.g. Blue Shield CA)">
-        </div>
-
-         <div class="form-group">
-          <span class="label-numbers">5.</span>
-          <label for="insuranceid">ID Number</label>
-          <input type="text" class="form-control input-lg" name="IDNUMBER" id="insuranceid" placeholder="ID Number">
-        </div>
-
         <div class="form-group">
-          <span class="label-numbers">6.</span>
+          <span class="label-numbers">4.</span>
           <label for="sex">Sex of Holder</label><br>
             <div class="btn-group" data-toggle="buttons">
               <label class="btn btn-info">
@@ -221,7 +211,7 @@
         </div>
 
         <div class="form-group">
-          <span class="label-numbers">7.</span>
+          <span class="label-numbers">5.</span>
           <label for="sex">Your Relationship to Holder</label>
           <div class="btn-group" data-toggle="buttons">
             <label class="btn btn-info">
@@ -250,6 +240,9 @@
   <input type="hidden" name="CONSENTTOCALLFLAG" value="Y">
   <input type="hidden" name="PRIMARYPROVIDERID">
   <input type="hidden" name="MOBILEPHONE">
+  <input type ="hidden" name = "INTERFACECONSENT.RXHUB.VERIFYMEDICATIONHISTORY" value="Y">
+  <input type="hidden" name="EMAILEXISTSYN" value="N">
+  <input type="hidden" name="NOEMAIL" value="1">
   
 
   <div class="create-account-form">
@@ -280,7 +273,7 @@
     storageBucket: "pronto-34571.appspot.com",
   };
 
-function setProviderId () {
+  function setProviderId () {
   var d = new Date();
   var n = d.getDay();
   var provider;
@@ -293,11 +286,7 @@ function setProviderId () {
 };
 
 $(document).ready(function () {
-  $("[name=PRIMARYPROVIDERID]").val(setProviderId());
-});
-
-$(document).ready(function () {
-  $("[name=MOBILEPHONE]").val(document.getElementById('phone').value);
+  $("input[name='PRIMARYPROVIDERID']").val(setProviderId());
 });
 
 var fb = firebase.initializeApp(config);
@@ -319,8 +308,8 @@ fb.auth().onAuthStateChanged(function(user) {
 
 
 
-      // https://jqueryvalidation.org/validate
-      // https://jqueryvalidation.org/documentation/
+      https://jqueryvalidation.org/validate
+      https://jqueryvalidation.org/documentation/
       $("#form").validate({
         highlight: function (element) {
           $(element).parent('div').addClass('has-error');
@@ -380,6 +369,28 @@ function saveFormDataToFb () {
       $.each(fields, function (i, el) {
         result[el.name] = el.value;
       });
+      result['MOBILEPHONE']=result['HOMEPHONE'];
+      //Change format of date
+      var olddob = result['DOB'];
+      var year = olddob.substring(0,4);
+      var month = olddob.substring(5,7);
+      var day = olddob.substring(8,10);
+      var newdob = month+"/"+day+"/"+year;
+      result['DOB'] = newdob;
+      //No email checkbox
+      // if ("input[name='INSUREDDOB']" === "" || "input[name='INSUREDDOB']" === null) 
+      // {
+      //   result['INSUREDDOB'] = "";
+      // } 
+      // else 
+      // {
+      //   var oldinsureddob = result['INSUREDDOB'];
+      //   var year = oldinsureddob.substring(0,4);
+      //   var month = oldinsureddob.substring(5,7);
+      //   var day = oldinsureddob.substring(8,10);
+      //   var newinsureddob = month+"/"+day+"/"+year;
+      //   result['INSUREDDOB'] = newinsureddob;;
+      // }
       return result;
     };
 
@@ -394,7 +405,7 @@ function handleResp(data) {
     {
         // Set city and state
         $("[name='CITY']").val(data.city);
-        $("input[name='STATE_text']").val(data.state);
+        $("input[name='STATE_select']").val(data.state);
     }
 }
 
@@ -404,7 +415,7 @@ $('[name=ZIP]').on('keyup change', function (e) {
     if (zipcode && zipcode.length >= 5 && /^[0-9]+$/.test(zipcode)) {
         console.log('valid length zip, performing query');
         var city = $("[name=CITY]");
-        var state = $("[name=STATE_text]");
+        var state = $("[name=STATE_select]");
         var clientKey = 'js-EJFbLjfar09JjmzcYHf7USipKEHeqjg42WgOfwZHw9rPv02uHhBB9T0UyI8Y1p33';
         if (!city.val()) {
             if (zipcode in zip_cache) {
