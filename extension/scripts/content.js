@@ -30,6 +30,7 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
     });
     if (!data.EMAIL) {
         $('[name=noemail]').click();
+        $('[name=noemail]').change();
     }
     sendResponse({data: data, success: true});
 });
