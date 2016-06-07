@@ -377,20 +377,14 @@ $.fn.getFormData =  function getFormData() {
     var day = olddob.substring(8,10);
     var newdob = month+"/"+day+"/"+year;
     result['DOB'] = newdob;
-    //No email checkbox
-    // if ("result['INSUREDDOB'] === "" || "input[name='INSUREDDOB']" === null) 
-    // {
-    //   result['INSUREDDOB'] = "";
-    // } 
-    // else 
-    // {
-    //   var oldinsureddob = result['INSUREDDOB'];
-    //   var year = oldinsureddob.substring(0,4);
-    //   var month = oldinsureddob.substring(5,7);
-    //   var day = oldinsureddob.substring(8,10);
-    //   var newinsureddob = month+"/"+day+"/"+year;
-    //   result['INSUREDDOB'] = newinsureddob;;
-    // }
+    if (result['INSUREDDOB']) {
+        var oldinsureddob = result['INSUREDDOB'];
+        year = oldinsureddob.substring(0,4);
+        month = oldinsureddob.substring(5,7);
+        day = oldinsureddob.substring(8,10);
+        var newinsureddob = month+"/"+day+"/"+year;
+        result['INSUREDDOB'] = newinsureddob;
+    }
     radios = $('[name][type=radio]');
     $.each(radios, function (i, el) {
         if (el.checked) {
