@@ -1,6 +1,6 @@
 var __setFormData = function setFormData (sel, data) {
   sel = sel || 'form';
-  $('#status').html('setting up data for: ' + data.FIRSTNAME + data.LASTNAME);
+  $('#status').html('setting up data for: ' + data.FIRSTNAME + " " + data.LASTNAME);
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {sel: sel, data: data}, function(response) {
           $('#status').html('changed data in form');
