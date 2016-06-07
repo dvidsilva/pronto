@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Pronto Health",
-    "description": "This extension allows a dr to prefill a form on their ERM",
+    "description": "This extension allows providers to prefill a form on their EMR",
     "version": "1.0",
     "homepage_url": "https://github.com/dvidsilva/pronto",
     "browser_action": {
