@@ -37,7 +37,7 @@ var loaded_patient_data = false;
 function loadPatientsData () {
     $('#status').html('Loading patients list');
     if (loaded_patient_data) {
-        return $('#status').html('Loaded patients list');
+        return $('#status').html('Loaded patient list');
     }
     var patient_template = $('patienttemplate').html();
     loaded_patient_data = true;
@@ -48,7 +48,7 @@ function loadPatientsData () {
             results[i].key = i;
             $('.patient-list').prepend(templateReplace(patient_template, results[i]));
         }
-        $('#status').html('Got patient data');
+        $('#status').html('Loaded patient data');
     });
 }
 

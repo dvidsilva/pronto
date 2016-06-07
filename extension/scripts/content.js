@@ -29,9 +29,10 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
         }
     });
     if (!data.EMAIL) {
-        $('[name=noemail]').click();
-        $('[name=noemail]').change();
+        jQuery('[name=noemail]').click();
+        jQuery('[name=noemail]').change();
     }
+    jQuery('[name="INTERFACECONSENT.RXHUB.VERIFYMEDICATIONHISTORY"][value=Y]').click();
     sendResponse({data: data, success: true});
 });
 
