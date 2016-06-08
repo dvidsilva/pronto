@@ -28,17 +28,14 @@ chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
             }
         }
     });
-    if (!data.EMAIL) {
-<<<<<<< HEAD
-        jQuery('[name=noemail]').click();
-        jQuery('[name=noemail]').change();
-=======
-        $('[name=noemail]').click();
-        $('[name=noemail]').prop('checked', true);
-        $('[name=noemail]').change();
->>>>>>> f85aae134e9383ed07ba945bd476f719bb36d3be
-    }
-    jQuery('[name="INTERFACECONSENT.RXHUB.VERIFYMEDICATIONHISTORY"][value=Y]').click();
+    // if (!data.EMAIL) {
+    //     jQuery('[name=noemail]').click();
+    //     jQuery('[name=noemail]').change();
+    //     $('[name=noemail]').click();
+    //     $('[name=noemail]').prop('checked', true);
+    //     $('[name=noemail]').change();
+    // }
+    // jQuery('[name="INTERFACECONSENT.RXHUB.VERIFYMEDICATIONHISTORY"][value=Y]').click();
     sendResponse({data: data, success: true});
 });
 
